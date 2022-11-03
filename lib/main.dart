@@ -110,9 +110,10 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: _data.isEmpty
                 ? <Widget>[
-                    Text('get data!',
-                        style: TextStyle(
-                            color: Colors.teal.shade700, fontSize: 40))
+                    const CircularProgressIndicator(
+                      value: null,
+                      semanticsLabel: 'Circular progress indicator',
+                    ),
                   ]
                 : <Widget>[
                     Text(_data[0].data,
