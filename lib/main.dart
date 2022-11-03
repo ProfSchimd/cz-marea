@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_maree/stationlist.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
@@ -17,11 +18,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Zuccante Maree',
+      title: 'CZ Marea',
       theme: ThemeData(
         primarySwatch: Colors.teal,
       ),
-      home: const MyHomePage(title: 'Zuccante Maree'),
+      home: const MyHomePage(title: 'CZ Marea'),
+      // home: const StationList(),
     );
   }
 }
