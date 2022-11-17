@@ -15,21 +15,6 @@ Future<List<Data>> fetchDataList() async {
 }
 
 class Data {
-  /*
-  {
-    "ordine":"2",
-    "ID_stazione":"01033",
-    "stazione":"Chioggia porto",
-    "nome_abbr":"Ch_Porto",
-    "latDMSN":"451357.00",
-    "lonDMSE":"121650.00",
-    "latDDN":"45.232500",
-    "lonDDE":"12.280556",
-    "data":"2020-01-02 16:50:00",
-    "valore":"-0.03 m"
-    }
-  */
-
   final String ordine;
   final String idStazione;
   final String stazione;
