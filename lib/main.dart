@@ -15,9 +15,8 @@ class SensorListPage extends StatefulWidget {
 
 class _SensorListState extends State<SensorListPage> {
   List<Data> _data = [];
-  final ScrollController _controller = ScrollController();
 
-  void _getData() async {
+  Future<void> _getData() async {
     List<Data> data = await fetchDataList();
     setState(() {
       _data = data;
@@ -26,20 +25,18 @@ class _SensorListState extends State<SensorListPage> {
 
   @override
   void initState() {
-    _controller.addListener(_scrollEvents);
     super.initState();
-    fetchDataList().then((data) => {
-          setState(() {
-            _data = data;
-          })
-        });
-  }
-
-  void _scrollEvents() {
-    if (_controller.offset <= _controller.position.minScrollExtent &&
-        !_controller.position.outOfRange) {
-      _getData();
-    }
+    fetchDataList()
+        .then((data) => {
+              setState(() {
+                _data = data;
+              })
+            })
+        .onError((error, stackTrace) => {
+              setState(() {
+                _data = [Data.dummyData(), Data.dummyData()];
+              })
+            });
   }
 
   void _tapped(BuildContext context, int index) {
@@ -51,30 +48,31 @@ class _SensorListState extends State<SensorListPage> {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
-      appBar: AppBar(title: const Text('Marea a Venezia')),
-      body: ListView.builder(
-        controller: _controller,
-        itemCount: _data.length,
-        itemBuilder: (context, index) {
-          return Card(
-              child: ListTile(
-            leading: const Icon(
-              Icons.water,
-              color: Colors.blue,
-            ),
-            trailing: Text(_data[index].valore,
-                style: TextStyle(
-                    color: (_data[index].valoreDouble < 0.7)
-                        ? Colors.green
-                        : Colors.red)),
-            title: Text(
-              _data[index].stazione,
-              textAlign: TextAlign.left,
-            ),
-            onTap: () => _tapped(context, index),
-          ));
-        },
-      ),
-    ));
+            appBar: AppBar(title: const Text('Marea a Venezia')),
+            body: RefreshIndicator(
+              onRefresh: _getData,
+              child: ListView.builder(
+                itemCount: _data.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                      child: ListTile(
+                    leading: const Icon(
+                      Icons.water,
+                      color: Colors.blue,
+                    ),
+                    trailing: Text(_data[index].valore,
+                        style: TextStyle(
+                            color: (_data[index].valoreDouble < 0.7)
+                                ? Colors.green
+                                : Colors.red)),
+                    title: Text(
+                      _data[index].stazione,
+                      textAlign: TextAlign.left,
+                    ),
+                    onTap: () => _tapped(context, index),
+                  ));
+                },
+              ),
+            )));
   }
 }

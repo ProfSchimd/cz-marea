@@ -55,4 +55,18 @@ class Data {
         data: json['data'] as String,
         valore: json['valore'] as String);
   }
+  factory Data.dummyData() {
+    return Data.fromJson({
+      "ordine": "2",
+      "ID_stazione": "01033",
+      "stazione": "Chioggia porto",
+      "nome_abbr": "Ch_Porto",
+      "latDMSN": "451357.00",
+      "lonDMSE": "121650.00",
+      "latDDN": "45.232500",
+      "lonDDE": "12.280556",
+      "data": "2020-01-02 16:50:00",
+      "valore": "-0.03 m"
+    });
+  }
 }
